@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File Management App</title>
+    <style>
+      h1 {
+        text-align: center;
+        font-family: "Courier New", Courier, monospace;
+      }
+      .action {
+        border: 1px solid black;
+        padding: 0px 40px;
+        align-items: center;
+        border-radius: 10px;
+        width: 500px;
+        margin-left: 450px;
+      }
+      ol{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+      }
+      li{
+        padding-right: 5px;
+      }
+      h2{
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>📁 File Management App</h1>
+      <div class="action">
+        <!-- Create File Form -->
+        <h2>➕ Create a new file</h2>
+        <form id="createForm" method="post" action="/create">
+          <label for="createFileName">File Name:</label>
+          <input type="text" id="createFileName" name="createFileName" />
+          <button type="submit">Create File</button>
+        </form>
+          
+        <!-- Read File Form -->
+        <h2>📖 Read a file</h2>
+        <form id="readForm" method="post" action="/read">
+          <label for="readFileName">File Name:</label>
+          <input type="text" id="readFileName" name="readFileName" />
+          <button type="submit">Read File</button>
+        </form>
+
+        <!-- Write to File Form -->
+        <h2>✍️ Write to a file</h2>
+        <form id="writeForm" method="post" action="/write">
+          <label for="writeFileName">File Name:</label>
+          <input type="text" id="writeFileName" name="writeFileName" /><br />
+          <label for="writeContent">Content:</label><br />
+          <textarea
+            id="writeContent"
+            name="writeContent"
+            rows="4"
+            cols="50"
+          ></textarea
+          ><br />
+          <button type="submit">Write to File</button>
+        </form>
+
+        <!-- Delete File Form -->
+        <h2>⛔ Delete a file</h2>
+        <form id="deleteForm" method="post" action="delete">
+          <label for="deleteFileName">File Name:</label>
+          <input type="text" id="deleteFileName" name="deleteFileName" />
+          <button type="submit">Delete File</button>
+        </form>
+        <div class="list">
+          <!-- List of Files -->
+          <h2>🌐 List of Files</h2>
+          <ol id="fileList"></ol>
+        </div>
+      </div>
+
+    <script>
+      function fetchFileList() {
+        fetch("/files")
+          .then((response) => response.json())
+          .then((data) => {
+            const fileListElement = document.getElementById("fileList");
+            fileListElement.innerHTML = ""; // Clear previous list
+            data.forEach((fileName) => {
+              const listItem = document.createElement("li");
+              listItem.textContent = fileName;
+              fileListElement.appendChild(listItem);
+            });
+          })
+          .catch((error) => console.error("Error:", error));
+      }
+
+      // Fetch file list initially when the page loads
+      window.addEventListener("DOMContentLoaded", () => {
+        fetchFileList();
+      });
+    </script>
+  </body>
+</html>

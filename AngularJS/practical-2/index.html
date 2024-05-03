@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Information Form</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div ng-controller="StudentController">
+        <div class="fo">
+            <div class="container">
+                <h2>Student Information Form</h2>
+                <form id="myForm">
+                    <div class="form-group">
+                        <label for="enrolmentNo">Enrolment No.:</label>
+                        <input type="text" id="enrolmentNo" ng-model="student.enrolmentNo" required><br>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" ng-model="student.name" required><br>
+                    </div>
+                    <div class="form-group">
+
+                        <label for="semester">Semester:</label>
+                        <input type="text" id="semester" ng-model="student.semester" required><br>
+                    </div>
+                    <div class="form-group">
+
+                        <label for="branch">Branch:</label>
+                        <input type="text" id="branch" ng-model="student.branch" required><br>
+                    </div>
+                    <div class="form-group">
+                        <label for="mobile">Mobile Number:</label>
+                        <input type="text" id="mobile" ng-model="student.mobile" required><br>
+                    </div>
+                    <div class="form-group">
+
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" ng-model="student.email" required><br>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address:</label>
+                        <textarea id="address" ng-model="student.address" required></textarea><br>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" ng-click="submitForm()">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <div class="container container-2">
+                <h2>Student Information Preview</h2>
+
+                <div class="form-group">
+                    <p>Enrolment No.: <span ng-bind="student.enrolmentNo"></span></p>
+                </div>
+                <div class="form-group">
+                    <p>Name: <span ng-bind="student.name"></span></p>
+                </div>
+                <div class="form-group">
+                    <p>Semester: <span ng-bind="student.semester"></span></p>
+                </div>
+                <div class="form-group">
+                    <p>Branch: <span ng-bind="student.branch"></span></p>
+                </div>
+                <div class="form-group">
+                    <p>Mobile Number: <span ng-bind="student.mobile"></span></p>
+                </div>
+                <div class="form-group">
+                    <p>Email: <span ng-bind="student.email"></span></p>
+                </div>
+                <div class="form-group">
+                    <p>Address: <span ng-bind="student.address"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

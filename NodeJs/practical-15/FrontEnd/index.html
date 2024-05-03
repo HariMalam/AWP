@@ -1,0 +1,73 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en" ng-app="libraryApp">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library App</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body ng-controller="LibraryController">
+    <nav>
+      <h1>📚 Library Management System</h1>
+    </nav>
+
+    <div class="bar">
+      <form ng-submit="addBook()">
+        <input
+          type="text"
+          id="title"
+          ng-model="newBook.title"
+          placeholder="Title"
+          required
+        />
+
+        <input
+          type="text"
+          id="author"
+          ng-model="newBook.author"
+          placeholder="Author"
+          required
+        />
+
+        <button type="submit" class="add-btn">Add Book</button>
+      </form>
+
+      <form ng-submit="searchBook()">
+        <input
+          type="text"
+          ng-model="searchQuery"
+          class="search"
+          placeholder="Search"
+        />
+      </form>
+    </div>
+    <div class="table">
+      <table border="1">
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>&nbsp;</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="book in filteredBooks = (books | filter:searchQuery)">
+            <td>{{$index+1}}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td class="remove">
+              <button ng-click="removeBook(book)" class="btn-remove">
+                Remove
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

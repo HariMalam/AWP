@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File Operations</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        font-size: 30px;
+      }
+      button {
+        padding: 10px;
+        margin-right: 10px;
+        margin-top: 20px;
+        border-radius: 10px;
+      }
+      .input {
+        padding: 20px;
+        margin: 30px 70px;
+        border: 1px solid black;
+        border-radius: 10px;
+      }
+      h1 {
+        margin: 10px 0px;
+        text-align: center;
+        font-size: 40px;
+      }
+      h2 {
+        font-size: 40px;
+      }
+      #fileContent {
+        padding: 40px 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="input">
+      <h1>📁 File Operations</h1>
+      <input type="file" id="fileInput" />
+      <br />
+      <button onclick="readFileSync()">Read File Synchronously</button>
+      <button onclick="readFileAsync()">Read File Asynchronously</button>
+      <button onclick="compressFile()">Compress File</button>
+      <button onclick="decompressFile()">Decompress File</button>
+      <br />
+      <br />
+      <h2>️‍🔥Content</h2>
+      <div id="fileContent"></div>
+    </div>
+
+    <script>
+      function readFileSync() {
+        const fileInput = document.getElementById("fileInput");
+        const file = fileInput.files[0];
+        if (file) {
+          const formData = new FormData();
+          formData.append("file", file);
+
+          fetch("/readFileSync", {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => response.text())
+            .then((data) => {
+              document.getElementById("fileContent").innerText = data;
+            })
+            .catch((error) => console.error("Error:", error));
+        }
+      }
+
+      function readFileAsync() {
+        const fileInput = document.getElementById("fileInput");
+        const file = fileInput.files[0];
+        if (file) {
+          const formData = new FormData();
+          formData.append("file", file);
+
+          fetch("/readFileAsync", {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => response.text())
+            .then((data) => {
+              document.getElementById("fileContent").innerText = data;
+            })
+            .catch((error) => console.error("Error:", error));
+        }
+      }
+
+      function compressFile() {
+        const fileInput = document.getElementById("fileInput");
+        const file = fileInput.files[0];
+        if (file) {
+          const formData = new FormData();
+          formData.append("file", file);
+
+          fetch("/compressFile", {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => {
+              if (response.ok) {
+                // Trigger file download
+                response.blob().then((blob) => {
+                  const url = window.URL.createObjectURL(blob);
+                  const a = document.createElement("a");
+                  a.href = url;
+                  a.download = `${file.name}.gz`;
+                  document.body.appendChild(a);
+                  a.click();
+                  window.URL.revokeObjectURL(url);
+                });
+              } else {
+                throw new Error("Compression failed");
+              }
+            })
+            .catch((error) => console.error("Error:", error));
+        }
+      }
+
+      function decompressFile() {
+        const fileInput = document.getElementById("fileInput");
+        const file = fileInput.files[0];
+        if (file) {
+          const formData = new FormData();
+          formData.append("file", file);
+
+          fetch("/decompressFile", {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => {
+              if (response.ok) {
+                // Trigger file download
+                response.blob().then((blob) => {
+                  const url = window.URL.createObjectURL(blob);
+                  const a = document.createElement("a");
+                  a.href = url;
+                  a.download = `${file.name.substring(
+                    0,
+                    file.name.length - 3
+                  )}`; // Remove the .gz extension
+                  document.body.appendChild(a);
+                  a.click();
+                  window.URL.revokeObjectURL(url);
+                });
+              } else {
+                throw new Error("Decompression failed");
+              }
+            })
+            .catch((error) => console.error("Error:", error));
+        }
+      }
+    </script>
+  </body>
+</html>

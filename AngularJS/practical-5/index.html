@@ -1,0 +1,29 @@
+<!-- for running this folder need to run in apache server -->
+<!-- kali linux : php -S localhost:8000 -->
+
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+    <title>Customer Data</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body ng-controller="myCtrl">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+        </tr>
+        <tr ng-repeat="customer in customers">
+            <td>{{customer.name}}</td>
+            <td>{{customer.email}}</td>
+            <td>{{customer.phone}}</td>
+        </tr>
+    </table>
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AWP - Practical Exam<</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        font-size: 20px;
+      }
+      body {
+        background-color: rgb(224, 224, 224);
+      }
+      .head {
+        text-align: center;
+        font-size: 50px;
+      }
+      .container {
+        margin-left: 400px;
+        width: 1000px;
+        padding: 10px;
+        background-color: white;
+        border-radius: 5px;
+      }
+      h1 {
+        margin: 20px 10px;
+        font-size: 30px;
+      }
+      .submit {
+        padding: 3px 10px;
+      }
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+      }
+      input {
+        padding: 2px;
+      }
+      table {
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="head">AWP - Practical Exam</h1>
+    <div class="container">
+      <h1>Insert Detail</h1>
+      <form action="http://localhost:5000/upload" method="post">
+        <input type="text" name="name" placeholder="Name" />
+        <input type="text" name="city" placeholder="City" />
+        <input type="text" name="Enrollment" placeholder="Enrollment" />
+        <input class="submit" type="submit" value="Insert" />
+      </form>
+
+      <h1>Delete Detail</h1>
+      <form action="http://localhost:5000/delete" method="post">
+        <select name="selection" id="selection">
+          <option value="name">Name</option>
+          <option value="city">City</option>
+          <option value="Enrollment">Enrollment</option>
+        </select>
+        <input type="text" name="updateText" placeholder="write text here" />
+        <input class="submit" type="submit" />
+      </form>
+      <h1>Details List</h1>
+      <div id="table-container"></div>
+    </div>
+  </body>
+  <script>
+    window.onload = function () {
+      fetch("http://localhost:5000")
+        .then((response) => response.json())
+        .then((data) => {
+          const tableContainer = document.getElementById("table-container");
+          const table = document.createElement("table");
+          const thead = document.createElement("thead");
+          const tbody = document.createElement("tbody");
+
+          const headers = Object.keys(data[0]);
+
+          const headerRow = document.createElement("tr");
+          headers.forEach((headerText) => {
+            const th = document.createElement("th");
+            th.textContent = headerText;
+            headerRow.appendChild(th);
+          });
+          thead.appendChild(headerRow);
+
+          data.forEach((rowData) => {
+            const row = document.createElement("tr");
+            headers.forEach((header) => {
+              const cell = document.createElement("td");
+              cell.textContent = rowData[header];
+              row.appendChild(cell);
+            });
+            tbody.appendChild(row);
+          });
+
+          table.appendChild(thead);
+          table.appendChild(tbody);
+
+          tableContainer.appendChild(table);
+        })
+        .catch((error) => console.error(error));
+    };
+  </script>
+</html>

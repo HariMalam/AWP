@@ -1,0 +1,1 @@
+Aim: write node js code to perform deletion operation from mongodb.
